@@ -1,0 +1,23 @@
+[general]
+# Log level
+#
+# debug=5, info=4, warning=3, error=2, fatal=1, panic=0
+log_level=4
+# server port
+port=8808
+# server mode
+# options:debug, release
+mode="release"
+
+[mysql]
+# data source name
+dsn="root:tgq@mysql@tcp(localhost:3306)/blog2?parseTime=true"
+#
+auto_migrate=true 
+
+# blog configuration
+[blogconf]
+    [blogconf.data]
+    globaltitle = "阿汤哥的博客"
+    globalkeyword = "博客,记录生活"
+    globaldesp = "记录生活的点点滴滴"

@@ -1,0 +1,7 @@
+.viscode
+
+# build
+/build
+
+# 
+*.exe
