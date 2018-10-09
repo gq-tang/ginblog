@@ -1,11 +1,12 @@
 package routers
 
 import (
+	"html/template"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/gq-tang/ginblog/controllers"
-	"html/template"
 )
 
 func Engine() *gin.Engine {
@@ -18,12 +19,20 @@ func Engine() *gin.Engine {
 		"date":     getDate,
 		"avatar":   getGravatar,
 	}
-	r.HTMLRender = loadMultiTemplates("../views/", "inc/", "tpl", funcMaps)
+	r.SetFuncMap(funcMaps)
+	files := getTempalteFiles("../views/", "tpl")
+	r.LoadHTMLFiles(files...)
 	store := cookie.NewStore([]byte("verysecret"))
-	r.Static("/static", "../static")
 	r.Use(sessions.Sessions("mysession", store))
+	r.Static("/static", "../static")
 	{
-		r.GET("/login", controllers.Login)
+		r.GET("/404", controllers.Go404)
+
+		r.GET("/login", controllers.GETLogin)
+		r.POST("/login", controllers.POSTLogin)
+		r.GET("/logout", controllers.GETLogout)
+
+		r.GET("/about", controllers.GETAboutMe)
 	}
 
 	return r

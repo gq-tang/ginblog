@@ -11,5 +11,7 @@ create table user(
     primary key(id)
 )engine=InnoDB auto_increment=2 default charset=utf8 comment='用户';
 
+insert into user(phone,password)
+values("15888888888","PBKDF2$sha512$1000$BAge9tI5qjmfihau1YCBKA==$jC/7JLU+GgLawRGD2JUvvVoiRmQErt8QUnRLaCqUNqfYKiPp7QXPF0MsArrs43TmnH2fgRXuWDzj3YoOc0Hf9A==");
 -- +migrate Down
 drop table user;

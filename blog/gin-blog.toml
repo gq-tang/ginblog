@@ -11,7 +11,7 @@ mode="release"
 
 [mysql]
 # data source name
-dsn="root:tgq@mysql@tcp(localhost:3306)/blog2?parseTime=true"
+dsn="root:root@tcp(localhost:3306)/blog2?parseTime=true"
 #
 auto_migrate=true 
 
