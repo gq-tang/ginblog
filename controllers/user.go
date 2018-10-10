@@ -16,10 +16,8 @@ type Login struct {
 }
 
 // check session
-func GETLogin(ctx *gin.Context) {
-	session := sessions.Default(ctx)
-	v := session.Get("user")
-	if v == nil {
+func LoginPage(ctx *gin.Context) {
+	if !ctx.GetBool("islogin") {
 		ctx.HTML(http.StatusOK, "login.tpl", nil)
 	} else {
 		ctx.Redirect(http.StatusFound, "/article")
@@ -27,7 +25,7 @@ func GETLogin(ctx *gin.Context) {
 }
 
 // user login
-func POSTLogin(ctx *gin.Context) {
+func Loging(ctx *gin.Context) {
 	var login Login
 	err := ctx.ShouldBind(&login)
 	if err != nil {
@@ -73,20 +71,15 @@ func POSTLogin(ctx *gin.Context) {
 }
 
 // GETLogout logut user
-func GETLogout(ctx *gin.Context) {
+func Logout(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	session.Delete("user")
+	session.Save()
 	ctx.Redirect(http.StatusFound, "/login")
 }
 
 // GETAboutMe return about me
-func GETAboutMe(ctx *gin.Context) {
-	var isLogin bool
-	session := sessions.Default(ctx)
-	user := session.Get("user")
-	if user != nil {
-		isLogin = true
-	}
+func AboutMe(ctx *gin.Context) {
 	var id int64 = 1
 	pro, err := models.GetUserProfile(config.C.MySQL.DB, id)
 	if err != nil {
@@ -96,6 +89,6 @@ func GETAboutMe(ctx *gin.Context) {
 	}
 	ctx.HTML(http.StatusOK, "about.tpl", gin.H{
 		"pro":     pro,
-		"isLogin": isLogin,
+		"isLogin": ctx.GetBool("islogin"),
 	})
 }

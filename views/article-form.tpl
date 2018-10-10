@@ -43,7 +43,7 @@
         <input type="radio" name="status" value="0" {{if eq .art.Status 0}}checked{{end}}>
         屏蔽 </label>
       </div>
-      <input type="hidden" name="id" value="{{.art.Id}}" />
+      <input type="hidden" name="id" value="{{.art.ID}}" />
       <button type="button" onClick="history.back();" class="btn btn-default">Back</button>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>

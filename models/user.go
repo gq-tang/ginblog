@@ -11,7 +11,6 @@ import (
 	"github.com/jmoiron/sqlx"
 
 	"github.com/pkg/errors"
-
 	"golang.org/x/crypto/pbkdf2"
 )
 
@@ -96,14 +95,14 @@ func LoginUser(db sqlx.Queryer, phone, password string) (User, error) {
 	 	from user 
 	 	where phone=?`, phone)
 	if err != nil {
-		return user, errors.Wrap(err, "user name or password error")
+		return user, errors.Wrap(err, "phone error")
 	}
 	result, err := hashCompare(password, user.Password)
 	if err != nil {
-		return user, errors.Wrap(err, "user name or password error")
+		return user, errors.Wrap(err, "password error")
 	}
 	if !result {
-		return user, errors.New("user name or password error")
+		return user, errors.New("password error")
 	}
 	return user, nil
 }

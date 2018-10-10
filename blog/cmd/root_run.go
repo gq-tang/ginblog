@@ -3,6 +3,13 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"runtime"
+	"strings"
+	"time"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gq-tang/ginblog/config"
 	"github.com/gq-tang/ginblog/migrations"
@@ -12,11 +19,6 @@ import (
 	migrate "github.com/rubenv/sql-migrate"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"net/http"
-	"os"
-	"os/signal"
-	"strings"
-	"time"
 )
 
 func run(cmd *cobra.Command, args []string) error {
@@ -93,6 +95,12 @@ func setServerMode() error {
 }
 
 func setLogLevel() error {
+	if runtime.GOOS == "windows" {
+		log.SetFormatter(&log.TextFormatter{
+			DisableColors:   true,
+			TimestampFormat: "2006/01/02 15:04:05",
+		})
+	}
 	log.SetLevel(log.Level(config.C.General.LogLevel))
 	return nil
 }

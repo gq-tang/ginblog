@@ -2,7 +2,7 @@
 # Log level
 #
 # debug=5, info=4, warning=3, error=2, fatal=1, panic=0
-log_level=4
+log_level=5
 # server port
 port=8808
 # server mode
@@ -21,3 +21,4 @@ auto_migrate=true
     globaltitle = "阿汤哥的博客"
     globalkeyword = "博客,记录生活"
     globaldesp = "记录生活的点点滴滴"
+    pageoffset=10

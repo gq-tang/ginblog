@@ -2,9 +2,10 @@ package storage
 
 import (
 	"database/sql"
+	"time"
+
 	"github.com/jmoiron/sqlx"
 	log "github.com/sirupsen/logrus"
-	"time"
 )
 
 // DBLogger is a DB wrapper which logs the executed sql queries and their

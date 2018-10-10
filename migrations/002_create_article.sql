@@ -3,7 +3,7 @@ drop table if exists article;
 create table article(
     id int(10) not null auto_increment,
     title varchar(255) not null default '' comment '文章标题',
-    url varchar(255) default '' comment 'URL',
+    uri varchar(255) default '' comment 'URL',
     keywords varchar(2550) default '' comment '关键词',
     summary varchar(255) default '',
     content longtext not null comment '正文',

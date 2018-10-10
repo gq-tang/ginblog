@@ -23,16 +23,22 @@ func Engine() *gin.Engine {
 	files := getTempalteFiles("../views/", "tpl")
 	r.LoadHTMLFiles(files...)
 	store := cookie.NewStore([]byte("verysecret"))
-	r.Use(sessions.Sessions("mysession", store))
+	r.Use(sessions.Sessions("mysession", store), controllers.IsLogin())
 	r.Static("/static", "../static")
 	{
 		r.GET("/404", controllers.Go404)
 
-		r.GET("/login", controllers.GETLogin)
-		r.POST("/login", controllers.POSTLogin)
-		r.GET("/logout", controllers.GETLogout)
+		r.GET("/login", controllers.LoginPage)
+		r.POST("/login", controllers.Loging)
+		r.GET("/logout", controllers.Logout)
 
-		r.GET("/about", controllers.GETAboutMe)
+		r.GET("/about", controllers.AboutMe)
+
+		r.GET("/article", controllers.ListArticle)
+		r.GET("/article/add", controllers.AddArticlePage)
+		r.POST("/article/add", controllers.AddArticle)
+		r.GET("/article/edit/:id", controllers.GetEditArticle)
+		r.POST("/article/edit/:id", controllers.EditArticle)
 	}
 
 	return r
