@@ -124,12 +124,19 @@ func ListArticle(ctx *gin.Context) {
 	pageStr := ctx.DefaultQuery("p", "1")
 	title := ctx.Query("title")
 	keywords := ctx.Query("keywords")
-	statusStr := ctx.DefaultQuery("status", "1")
+	status := ctx.Query("status")
 	page, _ := strconv.Atoi(pageStr)
 	if page <= 0 {
 		page = 1
 	}
-	status, _ := strconv.Atoi(statusStr)
+
+	if !ctx.GetBool("islogin") {
+		status = "1"
+	} else {
+		if status == "" {
+			status = "status"
+		}
+	}
 	offset, err := config.C.Int("pageoffset")
 	if err != nil {
 		offset = 9
@@ -144,6 +151,7 @@ func ListArticle(ctx *gin.Context) {
 		return
 	}
 
+	paginator := pagination.NewPaginator(ctx.Request, offset, count)
 	arts, err := models.ListArticle(config.C.MySQL.DB, page, offset, status, title, keywords)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
@@ -152,8 +160,6 @@ func ListArticle(ctx *gin.Context) {
 		})
 		return
 	}
-
-	paginator := pagination.SetPaginator(ctx, offset, count)
 
 	ctx.HTML(http.StatusOK, "article.tpl", gin.H{
 		"art":       arts,
@@ -165,7 +171,7 @@ func ListArticle(ctx *gin.Context) {
 // Get article detail
 func ArticleDetail(ctx *gin.Context) {
 	idstr := ctx.Param("id")
-	id, err := strconv.ParseInt(idstr, 10, 0)
+	id, _ := strconv.ParseInt(idstr, 10, 0)
 
 	art, err := models.GetArticle(config.C.MySQL.DB, id)
 	if err != nil {
@@ -176,5 +182,31 @@ func ArticleDetail(ctx *gin.Context) {
 		if art.Status == 0 {
 			ctx.Redirect(http.StatusFound, "/404")
 		}
+		return
 	}
+
+	// 评论分页
+	pageStr := ctx.Query("p")
+	page, err := strconv.Atoi(pageStr)
+	if err != nil {
+		page = 1
+	}
+	offset, err := config.C.Int("pageoffset")
+	if err != nil {
+		offset = 9
+	}
+	status := "status"
+	if !ctx.GetBool("islogin") {
+		status = "1"
+	}
+	count, _ := models.CountComment(config.C.MySQL.DB, id, status)
+
+	paginator := pagination.NewPaginator(ctx.Request, offset, count)
+	items, _ := models.ListComment(config.C.MySQL.DB, page, offset, id, status)
+
+	ctx.HTML(http.StatusOK, "article-detail.tpl", gin.H{
+		"coms":      items,
+		"paginator": paginator,
+		"art":       art,
+	})
 }

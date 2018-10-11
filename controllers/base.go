@@ -11,7 +11,7 @@ func Go404(ctx *gin.Context) {
 	ctx.HTML(http.StatusNotFound, "404.tpl", nil)
 }
 
-// get session
+// get session middleware
 func IsLogin() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		var isLogin bool

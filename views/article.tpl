@@ -36,7 +36,7 @@
 	{{range $k,$v := .art}}
     <div class="media">
       <div class="media-body">
-        <h4 class="media-heading"><a href="/article/{{$v.ID}}" title="{{$v.Title}}">{{$v.Title}}</a>（{{date $v.Created}}）</h4>
+        <h4 class="media-heading"><a href="/article/detail/{{$v.ID}}" title="{{$v.Title}}">{{$v.Title}}</a>（{{date $v.Created}}）</h4>
         <p>{{$v.Summary}}</p>
 		{{if $.isLogin }}<p class="pull-right">{{if eq $v.Status 0}}<button type="button" class="btn btn-primary btn-xs">屏蔽</button>{{end}} <a href="/article/edit/{{$v.ID}}" class="btn btn-danger">修改</a></p>{{end}}
       </div>

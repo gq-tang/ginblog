@@ -73,7 +73,7 @@
           <label for="content">内容</label>
           <textarea class="form-control" id="content" name="content" placeholder="Content" style="height:120px;"></textarea>
         </div>
-        <input type="hidden" name="article_id" value="{{.art.Id}}">
+        <input type="hidden" name="article_id" value="{{.art.ID}}">
         <input type="hidden" name="id" value="{{.com.Id}}">
         <button type="submit" class="btn btn-primary">提交评论</button>
       </form>

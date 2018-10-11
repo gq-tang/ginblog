@@ -26,6 +26,7 @@ func Engine() *gin.Engine {
 	r.Use(sessions.Sessions("mysession", store), controllers.IsLogin())
 	r.Static("/static", "../static")
 	{
+		r.GET("/", controllers.ListArticle)
 		r.GET("/404", controllers.Go404)
 
 		r.GET("/login", controllers.LoginPage)
@@ -35,6 +36,7 @@ func Engine() *gin.Engine {
 		r.GET("/about", controllers.AboutMe)
 
 		r.GET("/article", controllers.ListArticle)
+		r.GET("/article/detail/:id", controllers.ArticleDetail)
 		r.GET("/article/add", controllers.AddArticlePage)
 		r.POST("/article/add", controllers.AddArticle)
 		r.GET("/article/edit/:id", controllers.GetEditArticle)
