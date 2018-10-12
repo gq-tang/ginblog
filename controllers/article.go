@@ -132,10 +132,6 @@ func ListArticle(ctx *gin.Context) {
 
 	if !ctx.GetBool("islogin") {
 		status = "1"
-	} else {
-		if status == "" {
-			status = "status"
-		}
 	}
 	offset, err := config.C.Int("pageoffset")
 	if err != nil {
@@ -181,8 +177,8 @@ func ArticleDetail(ctx *gin.Context) {
 	if !ctx.GetBool("islogin") {
 		if art.Status == 0 {
 			ctx.Redirect(http.StatusFound, "/404")
+			return
 		}
-		return
 	}
 
 	// 评论分页
@@ -208,5 +204,6 @@ func ArticleDetail(ctx *gin.Context) {
 		"coms":      items,
 		"paginator": paginator,
 		"art":       art,
+		"isLogin":   ctx.GetBool("islogin"),
 	})
 }

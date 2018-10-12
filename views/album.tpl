@@ -43,7 +43,7 @@
             <h3>{{$v.Title}}</h3>
             <p>{{substr $v.Summary 0 20}}&nbsp;</p>
 			{{if $.isLogin }}
-            <p><a href="javascript:;" class="btn btn-primary js-album-edit" data-id="{{$v.Id}}" data-title="{{$v.Title}}" data-summary="{{$v.Summary}}" data-status="{{$v.Status}}">修改</a> <a href="javascript:;" class="btn btn-default">{{if $v.Status}}正常{{else}}屏蔽{{end}}</a></p>{{end}}
+            <p><a href="javascript:;" class="btn btn-primary js-album-edit" data-id="{{$v.ID}}" data-title="{{$v.Title}}" data-summary="{{$v.Summary}}" data-status="{{$v.Status}}">修改</a> <a href="javascript:;" class="btn btn-default">{{if $v.Status}}正常{{else}}屏蔽{{end}}</a></p>{{end}}
           </div>
         </div>
       </div>	

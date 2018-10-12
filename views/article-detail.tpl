@@ -31,7 +31,7 @@
           <h4 class="media-heading">{{$v.Nickname}} <span class="label label-info pull-right">（{{date_mh $v.Created}}）</span></h4>
           <div> {{$v.Content}}
             {{if $.isLogin }}
-            <p class="pull-right"> {{if eq $v.Status 0}} <a href="javascript:;" class="btn btn-danger btn-xs js-comment-status" data-status="1" data-id="{{$v.Id}}">正常</a> {{else}} <a href="javascript:;" class="btn btn-danger btn-xs js-comment-status" data-status="0" data-id="{{$v.Id}}">屏蔽</a> {{end}} </p>
+            <p class="pull-right"> {{if eq $v.Status 0}} <a href="javascript:;" class="btn btn-danger btn-xs js-comment-status" data-status="1" data-id="{{$v.ID}}">正常</a> {{else}} <a href="javascript:;" class="btn btn-danger btn-xs js-comment-status" data-status="0" data-id="{{$v.ID}}">屏蔽</a> {{end}} </p>
             {{end}} </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
           <textarea class="form-control" id="content" name="content" placeholder="Content" style="height:120px;"></textarea>
         </div>
         <input type="hidden" name="article_id" value="{{.art.ID}}">
-        <input type="hidden" name="id" value="{{.com.Id}}">
+        <input type="hidden" name="id" value="{{.com.ID}}">
         <button type="submit" class="btn btn-primary">提交评论</button>
       </form>
     </div>

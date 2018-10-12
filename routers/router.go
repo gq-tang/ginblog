@@ -41,6 +41,16 @@ func Engine() *gin.Engine {
 		r.POST("/article/add", controllers.AddArticle)
 		r.GET("/article/edit/:id", controllers.GetEditArticle)
 		r.POST("/article/edit/:id", controllers.EditArticle)
+
+		r.POST("/comment/add", controllers.AddComment)
+		r.POST("/comment/edit/status", controllers.EditComment)
+
+		r.GET("/album", controllers.ListAlbum)
+		r.GET("/album/upload", controllers.AlbumPage)
+		r.POST("/album/edit", controllers.EditAlbum)
+
+		r.POST("/upload", controllers.Upload)
+		r.POST("/uploadmulti", controllers.UploadMulti)
 	}
 
 	return r

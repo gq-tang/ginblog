@@ -116,6 +116,9 @@ func CreateArticle(db sqlx.Execer, item *Article) (int64, error) {
 // list article
 func ListArticle(db sqlx.Queryer, page, offset int, status, title, keywords string) ([]Article, error) {
 	var arts []Article
+	if status != "0" && status != "1" {
+		status = "status"
+	}
 	query := `
 	select id,
 	title,
@@ -141,7 +144,7 @@ func ListArticle(db sqlx.Queryer, page, offset int, status, title, keywords stri
 	start := (page - 1) * offset
 	err := sqlx.Select(db, &arts, query, offset, start)
 	if err != nil {
-		return arts, err
+		return nil, err
 	}
 	return arts, nil
 }
@@ -149,6 +152,9 @@ func ListArticle(db sqlx.Queryer, page, offset int, status, title, keywords stri
 // count article
 func CountArticle(db sqlx.Queryer, status string, title, keywords string) (int64, error) {
 	var count int64
+	if status != "0" && status != "1" {
+		status = "status"
+	}
 	query := `select count(id) cnt	from article where status=` + status
 	if title != "" && keywords != "" {
 		query += " and (title like '%" + title + "%'" + " or keywords like '%" + keywords + "%')"
@@ -159,8 +165,5 @@ func CountArticle(db sqlx.Queryer, status string, title, keywords string) (int64
 	}
 
 	err := sqlx.Get(db, &count, query)
-	if err != nil {
-		return 0, err
-	}
-	return count, nil
+	return count, err
 }
