@@ -4,11 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/gq-tang/ginblog/utils/pagination"
-
 	"github.com/gin-gonic/gin"
 	"github.com/gq-tang/ginblog/config"
 	"github.com/gq-tang/ginblog/models"
+	"github.com/gq-tang/ginblog/utils/pagination"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -51,34 +50,6 @@ func EditAlbum(ctx *gin.Context) {
 
 // ListAlbum list albums
 func ListAlbum(ctx *gin.Context) {
-	/*
-		session := sessions.Default(ctx)
-		str := session.Get("uploadMultiPic")
-		if str != nil {
-			s := strings.Trim(str.(string), "||")
-			strPic := strings.Split(s, "||")
-
-			strn := session.Get("uploadMultiName")
-			sn := strings.Trim(strn.(string), "||")
-			strName := strings.Split(sn, "||")
-
-			for i, pic := range strPic {
-				var alb models.Album
-				alb.Picture = pic
-				alb.Title = strName[i]
-				alb.Status = 1
-				alb.Created = time.Now().Unix()
-
-				_, err := models.CreateAlbum(config.C.MySQL.DB, &alb)
-				if err != nil {
-					log.Error(err)
-				}
-			}
-			session.Delete("uploadMultiName")
-			session.Delete("uploadMultiPic")
-			session.Save()
-		}
-	*/
 	pagestr := ctx.Param("p")
 	title := ctx.Param("title")
 	keywords := ctx.Param("keywords")

@@ -1,6 +1,6 @@
 .PHONY: build generate dev-requirements
 VERSION=$(shell git tag )
-GO_EXTRA_BUILD_ARGS="-a -installsuffix cgo"
+GO_EXTRA_BUILD_ARGS=-a -installsuffix cgo
 
 build: generate
 	mkdir -p build
@@ -20,7 +20,7 @@ dev-requirements:
 	go get -u github.com/rubenv/sql-migrate
 	go get -u github.com/elazarl/go-bindata-assetfs
 
-generate:
+generate: clean 
 	@echo "Generating binary files"
 	@go generate blog/main.go 
 

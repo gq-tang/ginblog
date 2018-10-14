@@ -5,7 +5,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/gin-contrib/sessions"
@@ -15,6 +14,8 @@ import (
 	"github.com/gq-tang/ginblog/utils"
 	log "github.com/sirupsen/logrus"
 )
+
+const VirtualUploadFilePath = "/uploadfile/"
 
 func Go404(ctx *gin.Context) {
 	ctx.HTML(http.StatusNotFound, "404.tpl", nil)
@@ -55,7 +56,7 @@ func Upload(ctx *gin.Context) {
 	}
 
 	// mkdir
-	dir, err := mkdir(config.C.General.UploadPath)
+	actualPath, virtualPath, err := mkdir(config.C.General.UploadPath)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"error":   1,
@@ -66,8 +67,9 @@ func Upload(ctx *gin.Context) {
 	// generate file name
 	ext := filepath.Ext(file.Filename)
 	fileName := utils.GetUUID() + ext
-	filepath := dir + "/" + fileName
-	err = ctx.SaveUploadedFile(file, filepath)
+	actualPath = actualPath + "/" + fileName
+	virtualPath = virtualPath + "/" + fileName
+	err = ctx.SaveUploadedFile(file, actualPath)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"error":   1,
@@ -77,7 +79,7 @@ func Upload(ctx *gin.Context) {
 	}
 	ctx.JSON(http.StatusOK, gin.H{
 		"error": 0,
-		"url":   strings.TrimPrefix(strings.TrimPrefix(filepath, ".."), "."),
+		"url":   virtualPath,
 	})
 }
 
@@ -99,26 +101,24 @@ func UploadMulti(ctx *gin.Context) {
 		return
 	}
 	// mkdir
-	dir, err := mkdir(config.C.General.UploadPath)
+	actualPath, virtualPath, err := mkdir(config.C.General.UploadPath)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code":    0,
-			"message": err.Error(),
+			"message": "mkdir error:" + err.Error(),
 		})
 		return
 	}
 
-	// uploadMultiPic := ""
-	// uploadMultiName := ""
 	files := form.File["uploadFiles"]
 	for i, _ := range files {
 		filename := files[i].Filename
-		//uploadMultiName += utils.ReplaceFileSuffix(filename) + "||"
 
 		ext := filepath.Ext(filename)
 		newName := utils.GetUUID() + ext
-		filepath := dir + "/" + newName
-		err := ctx.SaveUploadedFile(files[i], filepath)
+		actPath := actualPath + "/" + newName
+		virPath := virtualPath + "/" + newName
+		err := ctx.SaveUploadedFile(files[i], actPath)
 		if err != nil {
 			ctx.JSON(http.StatusOK, gin.H{
 				"code":    0,
@@ -128,7 +128,7 @@ func UploadMulti(ctx *gin.Context) {
 		}
 		item := models.Album{
 			Title:   utils.ReplaceFileSuffix(filename),
-			Picture: strings.TrimPrefix(strings.TrimPrefix(filepath, ".."), "."),
+			Picture: virPath,
 			Status:  1,
 			Created: time.Now().Unix(),
 		}
@@ -136,21 +136,18 @@ func UploadMulti(ctx *gin.Context) {
 		if err != nil {
 			log.Error(err)
 		}
-		//uploadMultiPic += strings.TrimPrefix(strings.TrimPrefix(filepath, ".."), ".") + "||"
 	}
-	// session := sessions.Default(ctx)
-	// session.Set("uploadMultiPic", uploadMultiPic)
-	// session.Set("uploadMultiName", uploadMultiName)
-	// session.Save()
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"code":    1,
 		"message": "上传成功",
-		// "url":     uploadMultiPic,
 	})
 }
 
-func mkdir(path string) (string, error) {
+func mkdir(path string) (actualPath, virtualPath string, err error) {
 	now := time.Now()
-	dir := path + now.Format("2006-01") + "/" + strconv.Itoa(now.Day())
-	return dir, os.MkdirAll(dir, 0755)
+	actualPath = path + now.Format("2006-01") + "/" + strconv.Itoa(now.Day())
+	virtualPath = VirtualUploadFilePath + now.Format("2006-01") + "/" + strconv.Itoa(now.Day())
+	err = os.MkdirAll(actualPath, 0755)
+	return
 }

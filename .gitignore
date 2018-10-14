@@ -1,10 +1,13 @@
 .viscode
 
 # build
-/build
+build/
 
 # 
 *.exe
 
 #
 debug
+
+#upload file
+uploadfile/

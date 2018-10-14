@@ -7,6 +7,7 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/gq-tang/ginblog/config"
 	"github.com/gq-tang/ginblog/controllers"
 	"github.com/gq-tang/ginblog/static"
 	log "github.com/sirupsen/logrus"
@@ -40,7 +41,9 @@ func Engine() *gin.Engine {
 		AssetInfo: static.AssetInfo,
 		Prefix:    "",
 	})
-	r.Static("/uploadfile", "../uploadfile/")
+	// static upload file
+
+	r.Static(controllers.VirtualUploadFilePath, config.C.General.UploadPath)
 	{
 		r.GET("/", controllers.ListArticle)
 		r.GET("/404", controllers.Go404)
