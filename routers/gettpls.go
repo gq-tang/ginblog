@@ -1,30 +1,36 @@
 package routers
 
 import (
-	"os"
+	"html/template"
 	"path/filepath"
+	"strings"
+
+	"github.com/gq-tang/ginblog/views"
+	log "github.com/sirupsen/logrus"
 )
 
-func getTempalteFiles(layoutDir, ext string) []string {
-	fileNames := make([]string, 0, 10)
-	filepath.Walk(layoutDir, func(path string, info os.FileInfo, err error) error {
+func loadTemplate(funcmap template.FuncMap, ext string) (*template.Template, error) {
+	t := template.New("")
+	names := views.AssetNames()
+	for _, name := range names {
+		info, err := views.AssetInfo(name)
 		if err != nil {
-			return nil
+			log.WithError(err).Error("get asset info error")
+			continue
 		}
-		if info.IsDir() {
-			var pattern string
-			if path[len(path)-1] == '/' {
-				pattern = path + "*." + ext
-			} else {
-				pattern = path + "/*." + ext
-			}
-			files, err := filepath.Glob(pattern)
-			if err != nil {
-				return err
-			}
-			fileNames = append(fileNames, files...)
+		if info.IsDir() || !strings.HasSuffix(info.Name(), ext) {
+			continue
 		}
-		return nil
-	})
-	return fileNames
+		data, err := views.Asset(name)
+		if err != nil {
+			log.WithError(err).Error("get asset data error")
+			continue
+		}
+
+		t, err = t.New(filepath.Base(info.Name())).Funcs(funcmap).Parse(string(data))
+		if err != nil {
+			return nil, err
+		}
+	}
+	return t, nil
 }

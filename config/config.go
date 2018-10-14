@@ -8,9 +8,10 @@ import (
 // Config defines the configuration structure
 type Config struct {
 	General struct {
-		LogLevel int    `mapstructure:"log_level"`
-		Port     int    `mapstructure:"port"`
-		Mode     string `mapstructure:"mode"`
+		LogLevel   int    `mapstructure:"log_level"`
+		Port       int    `mapstructure:"port"`
+		Mode       string `mapstructure:"mode"`
+		UploadPath string `mapstructure:"uploadpath"`
 	} `mapstructure:"general"`
 
 	MySQL struct {

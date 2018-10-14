@@ -8,10 +8,13 @@ port=8808
 # server mode
 # options:debug, release
 mode="release"
+# upload file path.
+# if exists upload file in the path,don't change it.
+uploadpath="../uploadfile/"
 
 [mysql]
 # data source name
-dsn="root:root@tcp(localhost:3306)/blog2?parseTime=true"
+dsn="root:123456@tcp(localhost:3306)/blog?parseTime=true"
 #
 auto_migrate=true 
 

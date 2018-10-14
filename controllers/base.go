@@ -55,7 +55,7 @@ func Upload(ctx *gin.Context) {
 	}
 
 	// mkdir
-	dir, err := mkdir("../static/uploadfile/")
+	dir, err := mkdir(config.C.General.UploadPath)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"error":   1,
@@ -99,7 +99,7 @@ func UploadMulti(ctx *gin.Context) {
 		return
 	}
 	// mkdir
-	dir, err := mkdir("../static/uploadfile/")
+	dir, err := mkdir(config.C.General.UploadPath)
 	if err != nil {
 		ctx.JSON(http.StatusOK, gin.H{
 			"code":    0,

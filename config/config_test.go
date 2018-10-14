@@ -1,9 +1,10 @@
 package config_test
 
 import (
+	"testing"
+
 	"github.com/gq-tang/ginblog/test"
 	"github.com/smartystreets/goconvey/convey"
-	"testing"
 )
 
 func TestString(t *testing.T) {
@@ -13,5 +14,6 @@ func TestString(t *testing.T) {
 		val, err := c.String("globaltitle")
 		convey.So(err, convey.ShouldBeNil)
 		convey.So(val, convey.ShouldEqual, "阿汤哥的博客")
+		convey.So
 	})
 }

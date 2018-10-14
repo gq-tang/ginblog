@@ -2,11 +2,12 @@ package cmd
 
 import (
 	"bytes"
+	"io/ioutil"
+
 	"github.com/gq-tang/ginblog/config"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
 )
 
 var cfgFile string
@@ -64,5 +65,9 @@ func initConfig() {
 
 	if err := viper.Unmarshal(&config.C); err != nil {
 		log.WithError(err).Fatal("unmarshal config error")
+	}
+	if config.C.General.UploadPath == "" {
+		log.Warn("the upload file path is not set,will set by default[../uploadfile/]")
+		config.C.General.UploadPath = "../uploadfile/"
 	}
 }

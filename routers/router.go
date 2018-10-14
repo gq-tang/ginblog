@@ -3,10 +3,13 @@ package routers
 import (
 	"html/template"
 
+	assetfs "github.com/elazarl/go-bindata-assetfs"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/gq-tang/ginblog/controllers"
+	"github.com/gq-tang/ginblog/static"
+	log "github.com/sirupsen/logrus"
 )
 
 func Engine() *gin.Engine {
@@ -19,12 +22,25 @@ func Engine() *gin.Engine {
 		"date":     getDate,
 		"avatar":   getGravatar,
 	}
-	r.SetFuncMap(funcMaps)
-	files := getTempalteFiles("../views/", "tpl")
-	r.LoadHTMLFiles(files...)
+
+	t, err := loadTemplate(funcMaps, ".tpl")
+	if err != nil {
+		log.WithError(err).Fatal("load template error")
+	}
+	r.SetHTMLTemplate(t)
 	store := cookie.NewStore([]byte("verysecret"))
+	store.Options(sessions.Options{
+		MaxAge:   24 * 60 * 60, // 1 day
+		HttpOnly: true,
+	})
 	r.Use(sessions.Sessions("mysession", store), controllers.IsLogin())
-	r.Static("/static", "../static")
+	r.StaticFS("static", &assetfs.AssetFS{
+		Asset:     static.Asset,
+		AssetDir:  static.AssetDir,
+		AssetInfo: static.AssetInfo,
+		Prefix:    "",
+	})
+	r.Static("/uploadfile", "../uploadfile/")
 	{
 		r.GET("/", controllers.ListArticle)
 		r.GET("/404", controllers.Go404)
