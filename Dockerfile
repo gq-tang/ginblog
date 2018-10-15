@@ -1,4 +1,5 @@
 FROM busybox
 
-WORKDIR /usr/local/bin
-COPY build/. ./
+WORKDIR /root/
+COPY build/blog ./
+ENTRYPOINT [ "blog" ]

@@ -146,11 +146,13 @@ $(function(){
 		var summary = form.find('textarea[name="summary"]');
 		if (summary.val() == '') { summary.focus(); return; }
 		var id = form.find('input[name="id"]');
-		if (id.val() == '') { return; }
+        if (id.val() == '') { return; }
+        var status=$("input[name='status']:checked");
 		
-		$.post("/album/edit", { id: id.val(), title:title.val(), summary:summary.val()}, function(data){			
+		$.post("/album/edit", { id: id.val(), title:title.val(), summary:summary.val(),status:status.val()}, function(data){			
 			if (data.code == 1) {				
-				that.text(data.message)
+                that.text(data.message)
+                setTimeout(function(){$('#dialogAlbum').remove();},1000);
 			} else {
 				dialogInfo(data.message)
 			}

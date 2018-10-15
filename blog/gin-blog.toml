@@ -10,7 +10,7 @@ port=8808
 mode="release"
 # upload file path.
 # if exists upload file in the path,don't change it.
-uploadpath="../uploadfile/"
+uploadpath="./uploadfile/"
 
 [mysql]
 # data source name

@@ -1,5 +1,5 @@
 .PHONY: build generate dev-requirements
-VERSION=$(shell git tag )
+VERSION=$(shell git describe --abbrev=0 --tags)
 GO_EXTRA_BUILD_ARGS=-a -installsuffix cgo
 
 build: generate
