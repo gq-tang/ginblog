@@ -81,6 +81,10 @@ func Logout(ctx *gin.Context) {
 // GETAboutMe return about me
 func AboutMe(ctx *gin.Context) {
 	var id int64 = 1
+	userid, ok := ctx.Get("userID")
+	if ok {
+		id = userid.(int64)
+	}
 	pro, err := models.GetUserProfile(config.C.MySQL.DB, id)
 	if err != nil {
 		log.Error(err)

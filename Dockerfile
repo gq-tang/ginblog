@@ -2,4 +2,5 @@ FROM busybox
 
 WORKDIR /root/
 COPY build/blog ./
-ENTRYPOINT [ "blog" ]
+# COPY uploadfile/ ./uploadfile/
+ENTRYPOINT [ "./blog" ]

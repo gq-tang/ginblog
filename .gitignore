@@ -1,4 +1,4 @@
-.viscode
+.vscode
 
 # build
 build/
@@ -11,3 +11,6 @@ debug
 
 #upload file
 uploadfile/
+
+# mysql database directory
+mysql_db/

@@ -20,7 +20,7 @@
         <p>这是我的电话： {{.pro.Phone}}</p>
         <p>我的地址： {{.pro.Address}}</p>
         <p>经常会做这些事：{{.pro.Hobby}}</p>
-        <p>我的介绍：{{.pro.Intro}}</p>
+        <p>我的介绍：<pre>{{.pro.Intro}}</pre></p>
       </div>
     </div>
   </div>

@@ -32,6 +32,7 @@ func IsLogin() gin.HandlerFunc {
 			isLogin = true
 		}
 		ctx.Set("islogin", isLogin)
+		ctx.Set("userID", user)
 		ctx.Next()
 	}
 }

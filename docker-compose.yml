@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: blog
+      MYSQL_DATABASE: blog
+    volumes:
+      - ./mysql_db:/var/lib/mysql
+  
+  # blog:
+  #   image: blog:v1.0
+  #   ports:
+  #     - 80:8080
+  #   volumes:
+  #     - ./uploadfile:/root/uploadfile
+  #     - ./gin-blog.toml:/etc/gin-blog/gin-blog.toml
+      
