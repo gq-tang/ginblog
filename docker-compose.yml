@@ -12,11 +12,11 @@ services:
     volumes:
       - ./mysql_db:/var/lib/mysql
   
-  # blog:
-  #   image: blog:v1.0
-  #   ports:
-  #     - 80:8080
-  #   volumes:
-  #     - ./uploadfile:/root/uploadfile
-  #     - ./gin-blog.toml:/etc/gin-blog/gin-blog.toml
+  blog:
+    image: blog:v1.0
+    ports:
+      - 80:8080
+    volumes:
+      - ./uploadfile:/root/uploadfile
+      - ./gin-blog.toml:/etc/gin-blog/gin-blog.toml
       
