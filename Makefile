@@ -28,3 +28,4 @@ clean:
 	@rm -f static/static_gen.go	
 	@rm -f migrations/migrations_gen.go
 	@rm -f views/views_gen.go 
+	- @rm -rf build/

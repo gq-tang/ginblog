@@ -13,8 +13,8 @@ create table user_profile(
     primary key(id)
 ) engine=InnoDB auto_increment=2 default charset=utf8 comment='用户详情';
 
-insert into `user_profile`(realname,sex,birth,email,phone,address,hobby,intro)
-values ('强哥', '1', '1986-02-03', 'tgq2004@163.com', '15888888888', '中国.广东.深圳', '酷爱蓝球',
+insert into `user_profile`(id,realname,sex,birth,email,phone,address,hobby,intro)
+values (1,'强哥', '1', '1986-02-03', 'tgq2004@163.com', '15888888888', '中国.广东.深圳', '打蓝球',
 'while true{
     I will coding my life
 }');

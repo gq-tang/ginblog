@@ -17,7 +17,8 @@ func AddArticlePage(ctx *gin.Context) {
 	if ctx.GetBool("islogin") {
 		art := models.Article{Status: 1}
 		ctx.HTML(http.StatusOK, "article-form.tpl", gin.H{
-			"art": art,
+			"art":     art,
+			"isLogin": ctx.GetBool("islogin"),
 		})
 	} else {
 		ctx.Redirect(http.StatusFound, "/login")

@@ -40,6 +40,7 @@ func run(cmd *cobra.Command, args []string) error {
 		Handler: routers.Engine(),
 	}
 	go func() {
+		log.WithField("Address", srv.Addr).Info("start http server...")
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			log.Fatalf("listen: %s\n", err)
 		}

@@ -4,7 +4,7 @@
 # debug=5, info=4, warning=3, error=2, fatal=1, panic=0
 log_level=4
 # server port
-port=8888
+port=8080
 # server mode
 # options:debug, release
 mode="release"

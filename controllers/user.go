@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-contrib/sessions"
@@ -13,6 +14,12 @@ import (
 type Login struct {
 	Phone    string `json:"phone" form:"phone"`
 	Password string `json:"password" form:"password"`
+}
+
+type UpdatePassword struct {
+	Phone       string `json:"phone" form:"phone"`
+	Password    string `json:"password" form:"password"`
+	NewPassword string `json:"new_password" form:"new_password"`
 }
 
 // check session
@@ -75,16 +82,12 @@ func Logout(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	session.Delete("user")
 	session.Save()
-	ctx.Redirect(http.StatusFound, "/login")
+	ctx.Redirect(http.StatusFound, "/article")
 }
 
 // GETAboutMe return about me
 func AboutMe(ctx *gin.Context) {
 	var id int64 = 1
-	userid, ok := ctx.Get("userID")
-	if ok {
-		id = userid.(int64)
-	}
 	pro, err := models.GetUserProfile(config.C.MySQL.DB, id)
 	if err != nil {
 		log.Error(err)
@@ -95,4 +98,41 @@ func AboutMe(ctx *gin.Context) {
 		"pro":     pro,
 		"isLogin": ctx.GetBool("islogin"),
 	})
+}
+
+// UpdatePwd update user password
+func UpdatePwd(ctx *gin.Context) {
+	if ctx.GetBool("islogin") {
+		var data UpdatePassword
+		err := ctx.ShouldBind(&data)
+		if err != nil {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code":    0,
+				"message": err.Error(),
+			})
+			return
+		}
+		user, err := models.LoginUser(config.C.MySQL.DB, data.Phone, data.Password)
+		if err != nil {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code":    0,
+				"message": fmt.Sprintf("原用户名或密码错误: %s", err),
+			})
+			return
+		}
+		err = models.UpdateUserPassword(config.C.MySQL.DB, user.ID, data.NewPassword)
+		if err != nil {
+			ctx.JSON(http.StatusOK, gin.H{
+				"code":    0,
+				"message": err.Error(),
+			})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{
+			"code":    1,
+			"message": "更新密码成功",
+		})
+	} else {
+		ctx.Redirect(http.StatusFound, "/login")
+	}
 }

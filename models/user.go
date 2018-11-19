@@ -14,6 +14,9 @@ import (
 	"golang.org/x/crypto/pbkdf2"
 )
 
+var salt = []byte{0x01, 0x05, 0x03, 0x04, 0x02}
+var iterations = 1000
+
 // user struct
 type User struct {
 	ID            int64  `db:"id"`
@@ -125,4 +128,18 @@ func GetUserProfile(db sqlx.Queryer, id int64) (UserProfile, error) {
 		return pro, err
 	}
 	return pro, nil
+}
+
+func UpdateUserPassword(db sqlx.Execer, id int64, newPassword string) error {
+	if newPassword == "" {
+		return errors.New("password can not empty")
+	}
+	hashpwd := hashWithSalt(newPassword, salt, iterations)
+	_, err := db.Exec(`update user set password=? where id=?`,
+		hashpwd,
+		id)
+	if err != nil {
+		return err
+	}
+	return nil
 }

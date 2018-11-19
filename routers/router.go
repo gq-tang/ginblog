@@ -70,6 +70,8 @@ func Engine() *gin.Engine {
 
 		r.POST("/upload", controllers.Upload)
 		r.POST("/uploadmulti", controllers.UploadMulti)
+
+		r.PUT("/user", controllers.UpdatePwd)
 	}
 
 	return r
