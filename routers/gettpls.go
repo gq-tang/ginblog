@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/gq-tang/ginblog/views"
+	"ginblog/views"
 	log "github.com/sirupsen/logrus"
 )
 

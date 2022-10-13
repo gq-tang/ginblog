@@ -3,7 +3,7 @@ package routers
 import (
 	"crypto/rand"
 	"fmt"
-	"github.com/gq-tang/ginblog/config"
+	"ginblog/config"
 	"github.com/pkg/errors"
 	"html/template"
 	"math/big"

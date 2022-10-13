@@ -5,7 +5,7 @@
 package main
 
 import (
-	"github.com/gq-tang/ginblog/blog/cmd"
+	"ginblog/blog/cmd"
 )
 
 var version string = "v1.0" // set by the complier

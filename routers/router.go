@@ -3,13 +3,13 @@ package routers
 import (
 	"html/template"
 
+	"ginblog/config"
+	"ginblog/controllers"
+	"ginblog/static"
 	assetfs "github.com/elazarl/go-bindata-assetfs"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/controllers"
-	"github.com/gq-tang/ginblog/static"
 	log "github.com/sirupsen/logrus"
 )
 

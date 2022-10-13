@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"strconv"
 
+	"ginblog/config"
+	"ginblog/models"
+	"ginblog/utils/pagination"
 	"github.com/gin-gonic/gin"
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/models"
-	"github.com/gq-tang/ginblog/utils/pagination"
 	log "github.com/sirupsen/logrus"
 )
 

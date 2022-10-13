@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/gq-tang/ginblog/storage"
+	"ginblog/storage"
 	"github.com/pkg/errors"
 )
 

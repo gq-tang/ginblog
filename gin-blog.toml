@@ -14,7 +14,7 @@ uploadpath="./uploadfile/"
 
 [mysql]
 # data source name
-dsn="root:blog@tcp(localhost:3306)/blog?parseTime=true"
+dsn="root:password@tcp(localhost:3306)/blog?parseTime=true"
 #
 auto_migrate=true 
 

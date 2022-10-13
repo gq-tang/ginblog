@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/gq-tang/ginblog/config"
+	"ginblog/config"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"os"

@@ -7,11 +7,11 @@ import (
 	"strconv"
 	"time"
 
+	"ginblog/config"
+	"ginblog/models"
+	"ginblog/utils"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/models"
-	"github.com/gq-tang/ginblog/utils"
 	log "github.com/sirupsen/logrus"
 )
 

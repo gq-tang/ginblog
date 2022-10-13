@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gq-tang/ginblog/utils/pagination"
+	"ginblog/utils/pagination"
 
+	"ginblog/config"
+	"ginblog/models"
 	"github.com/gin-gonic/gin"
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/models"
 )
 
 // get add article page.

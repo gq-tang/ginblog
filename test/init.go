@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/gq-tang/ginblog/config"
+	"ginblog/config"
 	"github.com/spf13/viper"
 )
 

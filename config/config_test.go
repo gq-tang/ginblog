@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"github.com/gq-tang/ginblog/test"
+	"ginblog/test"
 	"github.com/smartystreets/goconvey/convey"
 )
 

@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
+	"ginblog/config"
+	"ginblog/models"
 	"github.com/gin-gonic/gin"
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/models"
 )
 
 // AddComment add article comment.

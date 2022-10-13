@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/test"
+	"ginblog/config"
+	"ginblog/test"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )

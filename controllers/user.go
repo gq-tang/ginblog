@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 
+	"ginblog/config"
+	"ginblog/models"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/gq-tang/ginblog/config"
-	"github.com/gq-tang/ginblog/models"
 	log "github.com/sirupsen/logrus"
 )
 
