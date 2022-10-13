@@ -89,6 +89,11 @@ func (tx *TxLogger) Exec(query string, args ...interface{}) (sql.Result, error) 
 	return res, err
 }
 
+func (tx *TxLogger) Commit() error {
+	log.Debug("tx commit")
+	return tx.Tx.Commit()
+}
+
 func logQuery(query string, duration time.Duration, args ...interface{}) {
 	log.WithFields(log.Fields{
 		"query":    query,
